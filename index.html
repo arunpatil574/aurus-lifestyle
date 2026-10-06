@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aurus Lifestyle — Catalogues</title>
+  <meta name="description" content="Aurus Lifestyle. Four product catalogues, one mark — Blinco laminates, Kudos handles and pulls, Kudos knobs and drop pulls, and Ciscon acrylic laminates.">
+  <meta name="theme-color" content="#f5f3ee">
+
+  <link rel="preload" href="assets/shared/fonts/schibsted-grotesk-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/shared/fonts/hanken-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/shared/tokens.css">
+  <link rel="stylesheet" href="assets/shared/base.css">
+
+  <style>
+    /* ---- Gateway-only layout ---- */
+    .gw-hero {
+      min-height: 100dvh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: var(--sp-9);
+      padding-bottom: var(--sp-8);
+    }
+    .gw-hero__eyebrow { margin-bottom: clamp(1.25rem, 4vh, 2.5rem); display: inline-flex; align-items: center; }
+    .gw-hero__eyebrow::before {
+      content: ""; width: 2rem; height: 1px; margin-right: 0.9em;
+      background: var(--accent); opacity: 0.85;
+    }
+    .gw-word {
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: clamp(0.4rem, 1.2vh, 1rem);
+    }
+    .gw-word__main {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: clamp(4rem, 1rem + 18vw, 17rem);
+      line-height: 0.86; letter-spacing: 0.02em;
+      text-transform: uppercase;
+      display: flex; gap: 0.02em;
+    }
+    .gw-word__main span {
+      display: inline-block;
+      opacity: 0; transform: translateY(40%);
+      animation: letterIn var(--dur-3) var(--ease-out) forwards;
+      animation-delay: calc(var(--i) * 70ms + 120ms);
+    }
+    /* "LIFESTYLE" — a wide-tracked sub-wordmark beneath AURUS */
+    .gw-word__sub {
+      font-family: var(--font-display); font-weight: 500;
+      font-size: clamp(0.8rem, 0.3rem + 2vw, 1.9rem);
+      letter-spacing: clamp(0.3em, 0.16em + 1vw, 0.6em);
+      text-transform: uppercase; color: var(--ink-soft);
+      padding-left: 0.16em;
+      opacity: 0; transform: translateY(40%);
+      animation: letterIn var(--dur-3) var(--ease-out) forwards;
+      animation-delay: 560ms;
+    }
+    @keyframes letterIn { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .gw-word__main span, .gw-word__sub { opacity: 1; transform: none; animation: none; }
+    }
+    .gw-hero__lede {
+      margin-top: clamp(1.5rem, 4vh, 2.75rem);
+      max-width: 34ch; font-size: var(--t-md); color: var(--ink-soft);
+    }
+    .gw-scroll {
+      margin-top: clamp(2rem, 6vh, 4rem);
+      display: inline-flex; align-items: center; gap: 0.7em;
+      font-size: var(--t-sm); letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .gw-scroll svg { width: 16px; height: 16px; animation: nudge 2.4s var(--ease-soft) infinite; }
+    @keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+    @media (prefers-reduced-motion: reduce) { .gw-scroll svg { animation: none; } }
+
+    /* ---- Catalogue entries (large image-led panels) ---- */
+    .gw-index { padding-bottom: var(--sp-9); }
+    .gw-index__head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: var(--sp-4); flex-wrap: wrap;
+      padding-bottom: var(--sp-6); margin-bottom: var(--sp-7);
+      border-bottom: 1px solid var(--line);
+    }
+    .gw-index__head h2 { font-family: var(--font-display); font-weight: 500; font-size: var(--t-xl); letter-spacing: -0.01em; }
+    .gw-index__head p { color: var(--ink-faint); font-size: var(--t-sm); letter-spacing: 0.04em; }
+
+    /* A 2-up gallery grid: each cover sits directly above its caption,
+       so the brand name and its image read as one object. */
+    .gw-entries {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(2.25rem, 4vw, 4rem) clamp(1.5rem, 3vw, 2.75rem);
+    }
+    .entry { position: relative; transition: transform var(--dur-2) var(--ease-out); }
+    .entry:hover { transform: translateY(-4px); }
+    .entry__media {
+      position: relative; display: block; overflow: hidden;
+      border-radius: var(--r-lg);
+      aspect-ratio: 3 / 2; background: var(--cover-bg, var(--paper-deep));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-rest);
+      transition: box-shadow var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+    }
+    .entry:hover .entry__media { box-shadow: var(--shadow-lift); border-color: var(--accent-line); }
+    /* Accent wash rises from the foot of the cover on hover */
+    .entry__media::after {
+      content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(180deg, transparent 52%,
+                    color-mix(in srgb, var(--accent) 26%, transparent));
+      opacity: 0; transition: opacity var(--dur-2) var(--ease-out);
+    }
+    .entry:hover .entry__media::after { opacity: 1; }
+    /* Logo cover: brand mark centred + contained on its own colour */
+    .entry__media img {
+      position: absolute; inset: 0; margin: auto;
+      max-width: 64%; max-height: 54%;
+      width: auto; height: auto; object-fit: contain;
+      transition: transform 650ms var(--ease-out);
+    }
+    .entry:hover .entry__media img { transform: scale(1.05); }
+    .entry__badge {
+      position: absolute; top: var(--sp-4); left: var(--sp-4); z-index: 2;
+      font-family: var(--font-display); font-weight: 500;
+      font-size: var(--t-xs); letter-spacing: 0.2em; color: var(--stage-ink);
+      background: rgba(20, 19, 15, 0.42); backdrop-filter: blur(6px);
+      padding: 6px 12px; border-radius: 999px;
+    }
+
+    /* Placard caption, bound to the image by a hairline that tints on hover */
+    .entry__cap {
+      margin-top: var(--sp-4); padding-top: var(--sp-4);
+      border-top: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4);
+      transition: border-color var(--dur-2) var(--ease-out);
+    }
+    .entry:hover .entry__cap { border-color: var(--accent); }
+    .entry__name {
+      font-family: var(--font-display); font-weight: 500;
+      font-size: var(--t-lg); line-height: 1.04; letter-spacing: -0.012em;
+    }
+    .entry__desc {
+      margin-top: 5px; color: var(--ink-soft);
+      font-size: var(--t-sm); letter-spacing: 0.01em;
+    }
+    .entry__go {
+      flex: 0 0 auto;
+      width: 46px; height: 46px; border-radius: 50%;
+      display: grid; place-items: center;
+      border: 1px solid var(--line-strong); color: var(--ink);
+      transition: background var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out),
+                  border-color var(--dur-2) var(--ease-out);
+    }
+    .entry__go svg { width: 18px; height: 18px; transition: transform var(--dur-2) var(--ease-out); }
+    .entry:hover .entry__go { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+    .entry:hover .entry__go svg { transform: translateX(3px); }
+
+    /* Whole card is the link */
+    .entry__link::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: var(--r-lg); }
+    .entry__link:focus-visible { outline: none; }
+    .entry:focus-within .entry__media { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+    /* Per-entry accent + logo-cover background (brand's native colour) */
+    .entry[data-brand="blinco"]        { --accent: #a87f4c; --cover-bg: #114a55; }
+    .entry[data-brand="kudos-handles"] { --accent: #5d6f78; --cover-bg: #ffffff; }
+    .entry[data-brand="kudos-knobs"]   { --accent: #8a6a4d; --cover-bg: #ffffff; }
+    .entry[data-brand="ciscon"]        { --accent: #4d7a73; --cover-bg: #1a5e5e; }
+
+    @media (prefers-reduced-motion: reduce) { .entry:hover .entry__media img { transform: none; } }
+    @media (max-width: 720px) {
+      .gw-entries { grid-template-columns: 1fr; }
+      .entry__media { aspect-ratio: 16 / 10; }
+    }
+  </style>
+</head>
+<body data-brand="blinco">
+  <a class="skip-link" href="#catalogues">Skip to catalogues</a>
+
+  <header class="shell-bar" id="top">
+    <a class="mark" href="/" aria-label="Aurus Lifestyle — home">Aurus<span class="mark__sub">Lifestyle</span></a>
+    <a class="gw-scroll" href="#catalogues" style="margin:0; text-transform:uppercase;">
+      Catalogues
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </a>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="gw-hero wrap">
+      <p class="eyebrow gw-hero__eyebrow">Product catalogues</p>
+      <h1 class="gw-word" aria-label="Aurus Lifestyle">
+        <span class="gw-word__main" aria-hidden="true">
+          <span style="--i:0">A</span><span style="--i:1">u</span><span style="--i:2">r</span><span style="--i:3">u</span><span style="--i:4">s</span>
+        </span>
+        <span class="gw-word__sub" aria-hidden="true">Lifestyle</span>
+      </h1>
+      <p class="gw-hero__lede">Four catalogues, one mark. A quiet gallery of surfaces and hardware — laminates, handles, knobs and acrylics — to browse at your own pace.</p>
+      <a class="gw-scroll" href="#catalogues">
+        Begin
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+      </a>
+    </section>
+
+    <!-- Catalogue index -->
+    <section class="gw-index wrap" id="catalogues">
+      <div class="gw-index__head reveal">
+        <h2>The catalogues</h2>
+        <p>Four — 01 / 04</p>
+      </div>
+
+      <div class="gw-entries" data-stagger>
+
+        <!-- 01 Blinco -->
+        <article class="entry reveal" data-brand="blinco">
+          <a class="entry__link" href="/blinco" aria-label="Open the Blinco laminates catalogue"></a>
+          <div class="entry__media framed">
+            <img src="assets/brands/blinco/logo.png" alt="Blinco — premium laminates" loading="lazy" decoding="async">
+            <span class="entry__badge">01</span>
+          </div>
+          <div class="entry__cap">
+            <div>
+              <h3 class="entry__name">Blinco</h3>
+              <p class="entry__desc">Premium laminates · 59 pages</p>
+            </div>
+            <span class="entry__go" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </article>
+
+        <!-- 02 Kudos Handles -->
+        <article class="entry reveal" data-brand="kudos-handles">
+          <a class="entry__link" href="/kudos-handles" aria-label="Open the Kudos Handles catalogue"></a>
+          <div class="entry__media framed">
+            <img src="assets/brands/kudos-handles/logo.png" alt="Kudos Handles — handles &amp; pulls" loading="lazy" decoding="async">
+            <span class="entry__badge">02</span>
+          </div>
+          <div class="entry__cap">
+            <div>
+              <h3 class="entry__name">Kudos Handles</h3>
+              <p class="entry__desc">Handles &amp; pulls · 98 pages</p>
+            </div>
+            <span class="entry__go" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </article>
+
+        <!-- 03 Kudos Knobs -->
+        <article class="entry reveal" data-brand="kudos-knobs">
+          <a class="entry__link" href="/kudos-knobs" aria-label="Open the Kudos Knobs catalogue"></a>
+          <div class="entry__media framed">
+            <img src="assets/brands/kudos-knobs/logo.png" alt="Kudos Knobs — knobs &amp; drop pulls" loading="lazy" decoding="async">
+            <span class="entry__badge">03</span>
+          </div>
+          <div class="entry__cap">
+            <div>
+              <h3 class="entry__name">Kudos Knobs</h3>
+              <p class="entry__desc">Knobs &amp; drop pulls · 52 pages</p>
+            </div>
+            <span class="entry__go" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </article>
+
+        <!-- 04 Ciscon -->
+        <article class="entry reveal" data-brand="ciscon">
+          <a class="entry__link" href="/ciscon" aria-label="Open the Ciscon acrylic laminates catalogue"></a>
+          <div class="entry__media framed">
+            <img src="assets/brands/ciscon/logo.png" alt="Ciscon — acrylic laminates" loading="lazy" decoding="async">
+            <span class="entry__badge">04</span>
+          </div>
+          <div class="entry__cap">
+            <div>
+              <h3 class="entry__name">Ciscon</h3>
+              <p class="entry__desc">Acrylic laminates · 44 pages</p>
+            </div>
+            <span class="entry__go" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__row">
+      <span class="foot__mark">Aurus<span class="mark__sub">Lifestyle</span></span>
+      <span>Four catalogues, one mark.</span>
+    </div>
+  </footer>
+
+  <script src="assets/shared/shell.js" defer></script>
+</body>
+</html>

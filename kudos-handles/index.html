@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kudos Handles — Handles &amp; pulls · Aurus Lifestyle</title>
+  <meta name="description" content="Kudos Handles — cabinet, kitchen and wardrobe handles and pulls. Browse the full catalogue. Part of Aurus Lifestyle.">
+  <meta name="theme-color" content="#f5f3ee">
+
+  <link rel="preload" href="../assets/shared/fonts/schibsted-grotesk-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/shared/fonts/hanken-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/shared/tokens.css">
+  <link rel="stylesheet" href="../assets/shared/base.css">
+</head>
+<body data-brand="kudos-handles">
+  <a class="skip-link" href="#cat-grid">Skip to the catalogue</a>
+
+  <header class="shell-bar">
+    <a class="mark" href="/" aria-label="Aurus Lifestyle — home">Aurus<span class="mark__sub">Lifestyle</span></a>
+    <nav class="switch" data-open="false" aria-label="Switch catalogue">
+      <button type="button" class="switch__btn" aria-haspopup="true" aria-expanded="false">
+        Catalogues
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="switch__menu" role="menu">
+        <a class="switch__link" role="menuitem" href="/blinco"><b>Blinco</b> <span>Laminates</span></a>
+        <a class="switch__link" role="menuitem" href="/kudos-handles" aria-current="page"><b>Kudos Handles</b> <span>Handles &amp; pulls</span></a>
+        <a class="switch__link" role="menuitem" href="/kudos-knobs"><b>Kudos Knobs</b> <span>Knobs &amp; drop pulls</span></a>
+        <a class="switch__link" role="menuitem" href="/ciscon"><b>Ciscon</b> <span>Acrylic laminates</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="cat-hero wrap">
+      <p class="eyebrow cat-hero__eyebrow reveal">Catalogue 02 — Handles &amp; pulls</p>
+      <div class="cat-hero__brand reveal">
+        <div class="brand-plate">
+          <img class="brand-plate__logo" src="../assets/brands/kudos-handles/logo.png" alt="Kudos — handles &amp; pulls" decoding="async" onerror="this.closest('.brand-plate').classList.add('brand-plate--missing')">
+          <h1 class="brand-plate__fallback">Kudos Handles</h1>
+        </div>
+      </div>
+      <p class="cat-hero__lede reveal">Cabinet, kitchen and wardrobe handles and pulls — every profile and finish.</p>
+      <div class="cat-hero__meta reveal">
+        <span><b>98</b> pages</span>
+        <span><b>Handles &amp; pulls</b></span>
+        <span>Tap any page to view full screen</span>
+      </div>
+    </section>
+
+    <section class="stage-wrap">
+      <div id="cat-stage" class="stage" aria-label="Kudos Handles catalogue"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__row">
+      <a class="foot__mark" href="/">Aurus<span class="mark__sub">Lifestyle</span></a>
+      <span>Kudos Handles — handles &amp; pulls</span>
+    </div>
+  </footer>
+
+  <!-- ====================================================
+       EDIT ME: drop images in /assets/brands/kudos-handles/
+       and list their filenames here, in display order.
+       ==================================================== -->
+  <script>
+    window.AURUS_CATALOGUE = {
+      brand: "Kudos Handles",
+      descriptor: "Handles & pulls",
+      base: "../assets/brands/kudos-handles/",
+      pages: buildPages()
+    };
+    // Product pages kudos-handles-002.jpg ... kudos-handles-099.jpg.
+    // (Page 001 — the front brand-logo cover — and page 100 — the back
+    // brand-logo cover — were removed.)
+    // Replace this with a literal list if your filenames differ.
+    function buildPages() {
+      var out = [];
+      for (var i = 2; i <= 99; i++) {
+        out.push("kudos-handles-" + String(i).padStart(3, "0") + ".jpg");
+      }
+      return out;
+    }
+  </script>
+  <script src="../assets/shared/shell.js" defer></script>
+  <script src="../assets/shared/catalogue.js" defer></script>
+</body>
+</html>

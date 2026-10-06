@@ -1,0 +1,104 @@
+/* ============================================================
+   AURUS — design tokens
+   Colours · type scale · spacing · radius · motion
+   One quiet system shared by the gateway and all four
+   catalogues. Per-brand pages override only --accent.
+   ============================================================ */
+
+:root {
+  /* ---- Colour : a warm gallery, paper & ink ---- */
+  --paper:        #f5f3ee;   /* page background — warm linen   */
+  --paper-deep:   #ebe7df;   /* recessed panels, footers       */
+  --surface:      #fbfaf7;   /* cards / frames                 */
+  --ink:          #1a1813;   /* primary text — warm near-black */
+  --ink-soft:     #6b665c;   /* secondary text                 */
+  --ink-faint:    #9a948a;   /* captions, counters             */
+  --line:         rgba(26, 24, 19, 0.12);  /* hairlines        */
+  --line-strong:  rgba(26, 24, 19, 0.24);
+  --veil:         rgba(245, 243, 238, 0.7);
+
+  /* Full-screen viewer runs dark for the imagery to sing */
+  --stage:        #14130f;
+  --stage-ink:    #f3f1ea;
+  --stage-soft:   #a8a298;
+  --stage-line:   rgba(243, 241, 234, 0.16);
+  --scrim:        rgba(14, 19, 15, 0.55);
+
+  /* Accent — overridden per brand. Default = brass. */
+  --accent:       #a87f4c;
+  --accent-ink:   #fbfaf7;   /* text that sits on the accent   */
+
+  /* ---- Type ---- */
+  --font-display: "Schibsted Grotesk", "Hanken Grotesk", system-ui, sans-serif;
+  --font-text:    "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Fluid type scale — gentle, gallery-quiet */
+  --t-xs:   0.75rem;                                   /* 12 — counters     */
+  --t-sm:   0.8125rem;                                 /* 13 — labels       */
+  --t-base: 1rem;                                      /* 16 — body         */
+  --t-md:   clamp(1.0625rem, 0.9rem + 0.6vw, 1.25rem); /* lead              */
+  --t-lg:   clamp(1.4rem, 1.05rem + 1.6vw, 2rem);      /* brand names       */
+  --t-xl:   clamp(2.2rem, 1.4rem + 3.6vw, 3.6rem);     /* section heads     */
+  --t-display: clamp(3.2rem, 1.2rem + 9vw, 9rem);      /* AURUS wordmark    */
+
+  --leading-tight: 1.08;
+  --leading-snug:  1.28;
+  --leading-body:  1.6;
+
+  --track-wide:   0.18em;   /* eyebrows / labels   */
+  --track-wider:  0.32em;   /* the wordmark        */
+  --track-tight: -0.015em;
+
+  /* ---- Spacing : 8pt rhythm ---- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --maxw:   84rem;
+
+  /* ---- Radius & elevation (restrained) ---- */
+  --r-sm: 4px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --shadow-rest:  0 1px 2px rgba(26, 24, 19, 0.04);
+  --shadow-soft:  0 10px 30px -20px rgba(26, 24, 19, 0.28);
+  --shadow-lift:  0 22px 48px -26px rgba(26, 24, 19, 0.38);
+
+  /* ---- Motion ---- */
+  --dur-1: 180ms;
+  --dur-2: 280ms;
+  --dur-3: 420ms;
+  --dur-veil: 900ms;
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);   /* gentle settle */
+  --ease-in:   cubic-bezier(0.6, 0, 0.84, 0);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --z-base: 0;
+  --z-nav: 40;
+  --z-viewer: 1000;
+}
+
+/* Per-brand accents — applied via <body data-brand="..."> */
+body[data-brand="blinco"]        { --accent: #a87f4c; } /* brass / oak  */
+body[data-brand="kudos-handles"] { --accent: #5d6f78; } /* slate steel  */
+body[data-brand="kudos-knobs"]   { --accent: #8a6a4d; } /* bronze       */
+body[data-brand="ciscon"]        { --accent: #4d7a73; } /* sage acrylic */
+
+/* Derived accent tints. Declared on every accent scope (root, each
+   brand <body>, and each gateway .entry[data-brand]) so var(--accent)
+   re-resolves against the LOCAL accent rather than the root default. */
+:root,
+[data-brand] {
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  --accent-wash: color-mix(in srgb, var(--accent) 7%,  transparent);
+  --accent-line: color-mix(in srgb, var(--accent) 45%, var(--line));
+  --ring:        color-mix(in srgb, var(--accent) 32%, transparent);
+}
